@@ -87,6 +87,8 @@ export default class CommandLoader {
         .catch((err) => {
           this.logger.error(err);
         });
+
+
     } else {
       rest
         .put(Routes.applicationCommands(applicationId), {

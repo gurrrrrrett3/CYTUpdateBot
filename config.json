@@ -1,8 +1,8 @@
 {
   "core": {
-    "usingDatabase": false,
-    "commandRegisterMode": "global",
-    "guildId": "",
+    "usingDatabase": true,
+    "commandRegisterMode": "guild",
+    "guildId": "909808939045113887",
     "showCommandDeploymentInfo": true,
     "showCommandCount": true,
     "showModuleLoadInfo": true
