@@ -11,7 +11,7 @@ export default class Database {
     public async init(): Promise<void> {
         const orm = await MikroORM.init<PostgreSqlDriver>({
             entities: ["./dist/modules/**/entities/*.js"],
-            type: "postgresql",
+            driver: PostgreSqlDriver,
             tsNode: true,
             user: process.env.DB_USER,
             password: process.env.DB_PASS,
