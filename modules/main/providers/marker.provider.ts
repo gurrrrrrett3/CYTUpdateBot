@@ -69,9 +69,10 @@ export default class MarkerProvider {
         if (this.isFirstUpdate) {
             this.isFirstUpdate = false
             return
-        }
+        } else {
 
-        TownManager.update(this.mergeTownData(townData, polyData))
+            TownManager.update(this.mergeTownData(townData, polyData))
+        }
     }
 
     public static processTownyMarker(marker: Marker, world: string) {
