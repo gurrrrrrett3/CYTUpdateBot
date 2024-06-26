@@ -7,6 +7,8 @@ import TownManager from "../managers/town.manager";
 
 export default class MarkerProvider {
 
+    public static isFirstUpdate = true;
+
     public static async init() {
         setInterval(async () => {
             await this.updateMarkers(ServerEnum.TOWNY);
@@ -63,6 +65,11 @@ export default class MarkerProvider {
                 }
             })
         })
+
+        if (this.isFirstUpdate) {
+            this.isFirstUpdate = false
+            return
+        }
 
         TownManager.update(this.mergeTownData(townData, polyData))
     }
