@@ -4,6 +4,7 @@ import { ServerEnum, ServerUrls, worldLists } from "../types/serverEnum";
 import LiveTown from "../classes/liveTown";
 import LiveLocation from "../classes/liveLocation";
 import TownManager from "../managers/town.manager";
+import fetch from "node-fetch";
 
 export default class MarkerProvider {
 
@@ -34,7 +35,10 @@ export default class MarkerProvider {
     }
 
     public static async getMarkers(server: ServerEnum, world: string): Promise<ResponseMarkers> {
-        return fetch(`${ServerUrls[server]}/tiles/${world}/markers.json`).then(res => res.json())
+        return fetch(`${ServerUrls[server]}/tiles/${world}/markers.json`).then(res => res.json()).catch(err => {
+            console.error("Error fetching markers", err);
+            return []
+        })
     }
 
     public static handleTownyMarkers(markers: {
@@ -171,8 +175,6 @@ export default class MarkerProvider {
         // will implement this later
         // polyData.forEach(poly => {
         // })
-
-        console.log(`Processed ${Object.keys(towns).length} towns and ${Object.values(towns).reduce((acc, town) => acc + town.claims.length, 0)} claims`)
 
         return towns
     }

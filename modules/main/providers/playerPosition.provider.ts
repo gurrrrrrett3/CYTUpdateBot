@@ -1,3 +1,4 @@
+import fetch from "node-fetch";
 import LiveLocation from "../classes/liveLocation";
 import LivePlayer from "../classes/livePlayer";
 import EventManager from "../managers/event.manager";
@@ -16,7 +17,12 @@ export default class PlayerPositionProvider {
     }
 
     public static async updatePlayerPositionData(server: ServerEnum) {
-        const res = await fetch(ServerUrls[server] + "/tiles/players.json").then(res => res.json()) as ResponsePlayers;
+        const res: ResponsePlayers = await fetch(ServerUrls[server] + "/tiles/players.json")
+            .then(res => res.json())
+            .catch(err => {
+                console.error("Error fetching player data", err);
+                return
+            });
 
         // add new players and update existing players
         const playerData = res.players.map(player => {

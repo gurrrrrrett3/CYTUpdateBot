@@ -15,8 +15,7 @@ export default class SessionHandler {
 
     private static async onPlayerJoin(player: LivePlayer) {
         const repo = db.em.getRepository(Session)
-        const session = await repo.createFromLivePlayer(player)
-        console.log(`${player.name} joined the server`)
+        await repo.createFromLivePlayer(player)
     }
 
     private static async onPlayerLeave(player: LivePlayer) {
@@ -24,7 +23,6 @@ export default class SessionHandler {
         const session = await repo.findActiveSession(player)
         if (session) {
             await repo.endSession(session, player)
-            console.log(`${player.name} left the server`)
         }
     }
 

@@ -33,6 +33,7 @@ export default class DiscordUpdateManager {
         EventManager.on('townResidentRemove', this.onTownResidentRemove.bind(this))
         EventManager.on('townOutpostAdd', this.onTownOutpostAdd.bind(this))
         EventManager.on('townOutpostRemove', this.onTownOutpostRemove.bind(this))
+        EventManager.on('townNationChange', this.onTownNationChange.bind(this))
 
         EventManager.on('playerJoin', this.onPlayerJoin.bind(this))
         EventManager.on('playerLeave', this.onPlayerLeave.bind(this))
@@ -78,6 +79,10 @@ export default class DiscordUpdateManager {
             name: "Removed Outpost",
             value: `World: \`${outpost.world}\`\nx: \`${outpost.x}\`\nz: \`${outpost.z}\`\n[View on Map](${Util.getMapUrlFromLocation(outpost)})`
         }])
+    }
+
+    private static async onTownNationChange(town: LiveTown, oldNation: string, newNation: string) {
+        this.sendTownEmbed(town, DiscordUpdateType.UPDATE, "Nation Change", `${town.name} has left ${oldNation} to join ${newNation}.`)
     }
 
     private static async onPlayerJoin(player: LivePlayer) {

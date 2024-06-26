@@ -18,7 +18,7 @@ export default class Module<Config extends {
   private client?: Client;
   private commands: Map<string, CustomCommandBuilder> = new Map();
   private interactions: Map<string, InteractionHandler> = new Map();
-  protected logger: Logger
+  public logger: Logger
   public config: ConfigProvider<Config>
 
   constructor(bot: Bot, public location: string = path.resolve("./dist/modules/")) {
@@ -36,6 +36,7 @@ export default class Module<Config extends {
 
   protected defaultConfig(defaultConfig: Config) {
     this.config.defaultConfig(defaultConfig);
+    this.logger = new Logger(this.name);
   }
 
   /**

@@ -1,6 +1,7 @@
 import { EntityRepository } from "@mikro-orm/core";
 import { Location } from "../entities/Location.entity";
 import { ServerEnum } from "../types/serverEnum";
+import LiveLocation from "../classes/liveLocation";
 
 export class LocationRepository extends EntityRepository<Location> {
 
@@ -15,6 +16,10 @@ export class LocationRepository extends EntityRepository<Location> {
         this.getEntityManager().persist(newLocation);
 
         return newLocation;
+    }
+
+    public async findOrCreateByLiveLocation(location: LiveLocation) {
+        return this.findOrCreate(location.server, location.world, location.x, location.z);
     }
 
 }

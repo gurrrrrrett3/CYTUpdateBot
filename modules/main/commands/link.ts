@@ -10,17 +10,7 @@ const Command = new SlashCommandBuilder()
     opt.setName("username")
       .setDescription("Your Minecraft username.")
       .setRequired(true)
-      .setAutocomplete(async (interaction, text) => {
-        const players = Object.values(PlayerManager.playerData).filter(player => player.name.toLowerCase().includes(text.toLowerCase())).slice(0, 25);
-        const res = players.map(player => {
-          return {
-            name: player.name,
-            value: player.uuid
-          }
-        })
-
-        return res
-      })
+      .setAutocomplete(PlayerManager.livePlayerUuidAutoComplete.bind(PlayerManager))
   )
   .setFunction(async (interaction) => {
     const uuid = interaction.options.getString("username")!;

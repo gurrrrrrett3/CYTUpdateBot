@@ -3,6 +3,7 @@ import LiveLocation from "./liveLocation";
 export default class LiveTown {
 
     public name: string;
+    public nation?: string;
     public spawn: LiveLocation;
     public outposts: LiveLocation[] = [];
 

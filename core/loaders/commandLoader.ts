@@ -88,6 +88,10 @@ export default class CommandLoader {
           this.logger.error(err);
         });
 
+      // remove global commands
+      rest.put(Routes.applicationCommands(applicationId), {
+        body: [],
+      });
 
     } else {
       rest

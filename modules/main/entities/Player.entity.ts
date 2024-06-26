@@ -16,6 +16,11 @@ export class Player {
     @OneToMany(() => Session, session => session.player)
     sessions = new Collection<Session>(this);
 
+    @Property({
+        nullable: true
+    })
+    townId?: string;
+
     constructor(uuid: string, name: string) {
         this.uuid = uuid;
         this.name = name;
