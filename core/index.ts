@@ -6,6 +6,7 @@ dotenv.config()
 
 GlobalLogger.init({
     consoleLogLevel: LogLevel.INFO,
+    debugEnabled: true,
 })
 
 var Core = new CoreObject({

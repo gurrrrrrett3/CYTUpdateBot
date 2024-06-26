@@ -24,6 +24,7 @@ export default class PlayerPositionProvider {
                 return
             });
 
+
         // add new players and update existing players
         const playerData = res.players.map(player => {
             if (!PlayerManager.playerData[player.uuid]) {
