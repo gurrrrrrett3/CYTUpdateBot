@@ -8,8 +8,6 @@ import fetch from "node-fetch";
 
 export default class MarkerProvider {
 
-    public static isFirstUpdate = true;
-
     public static async init() {
         setInterval(async () => {
             await this.updateMarkers(ServerEnum.TOWNY);
@@ -70,13 +68,7 @@ export default class MarkerProvider {
             })
         })
 
-        if (this.isFirstUpdate) {
-            this.isFirstUpdate = false
-            return
-        } else {
-
-            TownManager.update(this.mergeTownData(townData, polyData))
-        }
+        TownManager.update(this.mergeTownData(townData, polyData))
     }
 
     public static processTownyMarker(marker: Marker, world: string) {

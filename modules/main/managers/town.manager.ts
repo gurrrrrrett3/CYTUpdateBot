@@ -6,8 +6,8 @@ import EventManager from "./event.manager";
 
 export default class TownManager {
 
-    public static towns: Record<string, LiveTown> = {};
     public static isFirstUpdate = true;
+    public static towns: Record<string, LiveTown> = {};
 
     public static init() {
     }
@@ -19,7 +19,9 @@ export default class TownManager {
 
         if (this.isFirstUpdate) {
             this.isFirstUpdate = false;
+
             this.towns = towns;
+            this.updateTownData(towns)
             return;
         }
 
