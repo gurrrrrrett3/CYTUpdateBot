@@ -1,4 +1,5 @@
 import { Options } from '@mikro-orm/core';
+import { PostgreSqlDriver } from '@mikro-orm/postgresql';
 
 const config: Options = {
     entities: [
@@ -7,7 +8,7 @@ const config: Options = {
     entitiesTs: [
         'src/modules/**/entities/*.ts'
     ],
-    type: 'postgresql',
+    driver: PostgreSqlDriver,
     host: process.env.DB_HOST,
     port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 5432,
     dbName: process.env.DB_NAME,
