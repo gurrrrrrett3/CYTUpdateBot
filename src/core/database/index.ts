@@ -19,7 +19,8 @@ export default class Database {
                 dbName: process.env.DB_NAME,
                 host: process.env.DB_HOST,
                 port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 5432,
-                metadataProvider: TsMorphMetadataProvider
+                metadataProvider: TsMorphMetadataProvider,
+                debug: process.env.DEBUG === "true",
             }).catch((err) => {
                 this.logger.error("Failed to initialize database")
                 console.error(err)

@@ -22,7 +22,7 @@ export default class PlayerManager {
 
     public static async dbPlayerUuidAutoComplete(interaction: AutocompleteInteraction, text: string) {
         const repo = db.em.getRepository(Player)
-        const players = await repo.find({ name: { $ilike: `%${text}%` } }, { limit: 25 })
+        const players = await repo.find({ name: { $ilike: `%${text}%` } }, { limit: 25, fields: ['name', 'uuid'] })
 
         return players.map(player => ({
             name: player.name,

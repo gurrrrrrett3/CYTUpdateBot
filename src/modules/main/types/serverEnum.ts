@@ -8,6 +8,11 @@ export const ServerUrls = {
     [ServerEnum.SMP]: "https://survival.craftyourtown.com",
 }
 
+export const ServerNames = {
+    [ServerEnum.TOWNY]: "Towny",
+    [ServerEnum.SMP]: "SMP",
+}
+
 export const worldLists = {
     [ServerEnum.TOWNY]: ["minecraft_overworld", "minecraft_fishing"],
     [ServerEnum.SMP]: [],

@@ -8,7 +8,6 @@ export default class EventManager {
     private static logger = new Logger("EventManager");
 
     public static emit<T extends keyof Events>(event: T, ...args: Parameters<Events[T]>) {
-        this.logger.info(`Emitting event: ${event}`)
         return this._emitter.emit(event, ...args);
     }
 

@@ -23,6 +23,10 @@ export class Location {
     @Property()
     z: number
 
+    get cleanWorld() {
+        return this.world.replace("minecraft_", "");
+    }
+
     constructor(server: ServerEnum, world: string, x: number, z: number) {
         this.server = server;
         this.world = world;

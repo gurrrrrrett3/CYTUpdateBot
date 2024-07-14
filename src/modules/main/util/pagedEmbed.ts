@@ -87,7 +87,7 @@ export default class PagedEmbed {
             .setCustomId(`${this.globalKey}-next`)
             .setEmoji("➡️")
             .setStyle(ButtonStyle.Primary)
-            .setDisabled(this.currentPage === this.options?.pageCount || false);
+            .setDisabled(this.options?.pageCount != undefined && this.currentPage === this.options!.pageCount - 1);
         const first = new ButtonBuilder()
             .setCustomId(`${this.globalKey}-first`)
             .setEmoji("⏮️")
@@ -97,7 +97,7 @@ export default class PagedEmbed {
             .setCustomId(`${this.globalKey}-last`)
             .setEmoji("⏭️")
             .setStyle(ButtonStyle.Secondary)
-            .setDisabled(this.currentPage === this.options?.pageCount || false);
+            .setDisabled(this.options?.pageCount != undefined && this.currentPage === this.options!.pageCount - 1);
         const refresh = new ButtonBuilder()
             .setCustomId(`${this.globalKey}-refresh`)
             .setEmoji("🔄")
@@ -161,7 +161,7 @@ export default class PagedEmbed {
         const embed = await this.generateEmbed(this.currentPage);
         if (this.options?.footer) {
             embed.setFooter({
-                text: `Page ${this.currentPage + 1}/${(this.options?.pageCount || 0) + 1}${this.options?.extraFooterText ? ` | ${this.options?.extraFooterText}` : ""
+                text: `Page ${this.currentPage + 1}/${(this.options?.pageCount || 0)}${this.options?.extraFooterText ? ` | ${this.options?.extraFooterText}` : ""
                     }`,
             });
         }

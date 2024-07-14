@@ -11,7 +11,7 @@ export default class MarkerProvider {
     public static async init() {
         setInterval(async () => {
             await this.updateMarkers(ServerEnum.TOWNY);
-        }, 30000)
+        }, 10000)
 
         this.updateMarkers(ServerEnum.TOWNY)
     }

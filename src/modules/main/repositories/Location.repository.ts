@@ -13,7 +13,7 @@ export class LocationRepository extends EntityRepository<Location> {
         }
 
         const newLocation = new Location(server, world, x, z);
-        this.getEntityManager().persist(newLocation);
+        this.getEntityManager().persistAndFlush(newLocation);
 
         return newLocation;
     }

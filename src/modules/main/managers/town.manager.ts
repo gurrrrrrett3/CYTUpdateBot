@@ -1,4 +1,6 @@
+import { AutocompleteInteraction } from "discord.js";
 import { db } from "../../../core/index.js";
+import { Logger } from "../../../core/utils/logger.js";
 import LiveTown from "../classes/liveTown.js";
 import { Location } from "../entities/Location.entity.js";
 import { Town } from "../entities/Town.entity.js";
@@ -8,6 +10,7 @@ export default class TownManager {
 
     public static isFirstUpdate = true;
     public static towns: Record<string, LiveTown> = {};
+    public static logger = new Logger("TownManager");
 
     public static init() {
     }
@@ -18,6 +21,8 @@ export default class TownManager {
         const townsToUpdate: Record<string, LiveTown> = {};
 
         if (this.isFirstUpdate) {
+            this.logger.info("First update, skipping comparison")
+
             this.isFirstUpdate = false;
 
             this.towns = towns;
@@ -143,7 +148,21 @@ export default class TownManager {
             town.outpostLocationIds = await Promise.all(liveTown.outposts.map(outpost => locationRepo.findOrCreateByLiveLocation(outpost).then(location => location.id)))
         }))
 
-        await db.em.flush()
+        await db.em.persistAndFlush(townEntities)
+    }
+
+    public static async townAutoComplete(interaction: AutocompleteInteraction, text: string) {
+        if (text == "") {
+            return Object.keys(this.towns).slice(0, 25).map(townName => ({
+                name: townName,
+                value: townName
+            }))
+        }
+
+        return Object.keys(this.towns).filter(townName => townName.toLowerCase().includes(text.toLowerCase())).slice(0, 25).map(townName => ({
+            name: townName,
+            value: townName
+        }))
     }
 
 }
