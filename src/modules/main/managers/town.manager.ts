@@ -5,6 +5,7 @@ import LiveTown from "../classes/liveTown.js";
 import { Location } from "../entities/Location.entity.js";
 import { Town } from "../entities/Town.entity.js";
 import EventManager from "./event.manager.js";
+import { Player } from "../entities/Player.entity.js";
 
 export default class TownManager {
 
@@ -135,8 +136,10 @@ export default class TownManager {
 
         const townRepo = db.em.getRepository(Town)
         const locationRepo = db.em.getRepository(Location)
+        const playerRepo = db.em.getRepository(Player)
 
         const townEntities = await Promise.all(towns.map(town => townRepo.findOrCreateNoPerist(town.name, town.spawn, town.mayor, town.pvpEnabled)))
+        const playerEntitiesToUpdate: Player[] = []
 
         await Promise.all(townEntities.map(async town => {
             const liveTown = townData[town.name]
@@ -146,9 +149,27 @@ export default class TownManager {
             town.assistants = liveTown.assistants
             town.residents = liveTown.residents
             town.outpostLocationIds = await Promise.all(liveTown.outposts.map(outpost => locationRepo.findOrCreateByLiveLocation(outpost).then(location => location.id)))
+
+            const playerEntities = await playerRepo.find({
+                name: {
+                    $in: [
+                        ...town.residents,
+                        ...town.assistants,
+                        town.mayor
+                    ]
+                }
+            })
+
+            playerEntities.map(player => {
+                if (player.townId !== town.name) {
+                    player.townId = town.id
+                    playerEntitiesToUpdate.push(player)
+                }
+            })
+
         }))
 
-        await db.em.persistAndFlush(townEntities)
+        await db.em.persistAndFlush([...townEntities, ...playerEntitiesToUpdate])
     }
 
     public static async townAutoComplete(interaction: AutocompleteInteraction, text: string) {
