@@ -14,6 +14,6 @@ export const ServerNames = {
 }
 
 export const worldLists = {
-    [ServerEnum.TOWNY]: ["minecraft_overworld", "minecraft_fishing"],
+    [ServerEnum.TOWNY]: ["minecraft_overworld"],
     [ServerEnum.SMP]: [],
 } as Record<ServerEnum, string[]>

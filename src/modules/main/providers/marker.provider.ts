@@ -68,6 +68,10 @@ export default class MarkerProvider {
             })
         })
 
+        if (townData.length === 0 || polyData.length === 0) {
+            return;
+        }
+
         TownManager.update(this.mergeTownData(townData, polyData))
     }
 
